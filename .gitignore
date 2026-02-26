@@ -14,3 +14,7 @@ build/
 
 # Claude Code local settings
 .claude/
+
+# Website
+node_modules/
+website/dist/
