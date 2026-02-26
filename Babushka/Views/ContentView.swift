@@ -29,6 +29,12 @@ struct ContentView: View {
                 },
                 onReorderTracks: { fileVM in
                     appViewModel.reorderingFileId = fileVM.id
+                },
+                onEditChapters: { fileVM in
+                    appViewModel.editingChaptersFileId = fileVM.id
+                },
+                onAddChapters: { fileVM in
+                    appViewModel.editingChaptersFileId = fileVM.id
                 }
             )
         } detail: {
@@ -51,6 +57,14 @@ struct ContentView: View {
             return true
         }
         .toolbar {
+            if case .chapterGroup = appViewModel.selectedSidebarItem,
+               let fileVM = activeFileViewModel {
+                ToolbarItem(placement: .primaryAction) {
+                    Button("Edit Chapters...") {
+                        appViewModel.editingChaptersFileId = fileVM.id
+                    }
+                }
+            }
             ToolbarItem(placement: .primaryAction) {
                 Button {
                     showJobsPopover.toggle()
@@ -87,6 +101,9 @@ struct ContentView: View {
         if let reorderingId = appViewModel.reorderingFileId {
             return appViewModel.openFiles.first { $0.id == reorderingId }
         }
+        if let chapterEditId = appViewModel.editingChaptersFileId {
+            return appViewModel.openFiles.first { $0.id == chapterEditId }
+        }
         guard let item = appViewModel.selectedSidebarItem else { return nil }
         return appViewModel.fileViewModel(for: item)
     }
@@ -114,6 +131,12 @@ struct ContentView: View {
         if let reorderingId = appViewModel.reorderingFileId,
            let fileVM = appViewModel.openFiles.first(where: { $0.id == reorderingId }) {
             TrackReorderView(
+                fileViewModel: fileVM,
+                appViewModel: appViewModel
+            )
+        } else if let chapterEditId = appViewModel.editingChaptersFileId,
+                  let fileVM = appViewModel.openFiles.first(where: { $0.id == chapterEditId }) {
+            ChapterEditorView(
                 fileViewModel: fileVM,
                 appViewModel: appViewModel
             )
@@ -179,6 +202,13 @@ struct ContentView: View {
                     identification: identification,
                     fileViewModel: fileVM,
                     appViewModel: appViewModel
+                )
+            }
+
+        case .chapterGroup:
+            if let fileVM = appViewModel.fileViewModel(for: item) {
+                ChapterDetailView(
+                    fileViewModel: fileVM
                 )
             }
         }

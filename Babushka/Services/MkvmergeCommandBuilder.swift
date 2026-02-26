@@ -3,7 +3,8 @@ import Foundation
 struct MkvmergeCommandBuilder: Sendable {
     func buildArguments(
         filePath: String, outputPath: String,
-        changeset: ResolvedChangeset, allTracks: [MKVTrack]
+        changeset: ResolvedChangeset, allTracks: [MKVTrack],
+        chapterFilePath: String? = nil
     ) -> [String] {
         var arguments: [String] = ["-o", outputPath]
 
@@ -75,6 +76,13 @@ struct MkvmergeCommandBuilder: Sendable {
         if let order = changeset.trackOrder {
             let orderString = order.map { "0:\($0)" }.joined(separator: ",")
             arguments.append(contentsOf: ["--track-order", orderString])
+        }
+
+        // Chapter options
+        if changeset.removeChapters {
+            arguments.append("--no-chapters")
+        } else if let chapterPath = chapterFilePath {
+            arguments.append(contentsOf: ["--chapters", chapterPath])
         }
 
         // Input file

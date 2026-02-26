@@ -27,6 +27,10 @@ actor MKVToolnixService {
         try await extraction.extractTrack(filePath: filePath, trackId: trackId, outputPath: outputPath)
     }
 
+    func extractChapters(filePath: String) async throws -> String? {
+        try await extraction.extractChapters(filePath: filePath)
+    }
+
     func extractAttachmentTo(filePath: String, attachmentId: Int, outputPath: String) async throws {
         try await extraction.extractAttachmentTo(filePath: filePath, attachmentId: attachmentId, outputPath: outputPath)
     }

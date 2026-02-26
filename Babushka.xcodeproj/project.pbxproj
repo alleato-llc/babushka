@@ -59,6 +59,11 @@
 		B10000000000000000000040 /* CodecExtensionMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000040 /* CodecExtensionMapTests.swift */; };
 		B10000000000000000000041 /* FileViewModelChangesetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000041 /* FileViewModelChangesetTests.swift */; };
 		B10000000000000000000042 /* MKVChangesetIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000042 /* MKVChangesetIntegrationTests.swift */; };
+		B10000000000000000000050 /* MKVChapterEdition.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000050 /* MKVChapterEdition.swift */; };
+		B10000000000000000000051 /* ChapterXMLService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000051 /* ChapterXMLService.swift */; };
+		B10000000000000000000052 /* ChapterDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000052 /* ChapterDetailView.swift */; };
+		B10000000000000000000053 /* ChapterEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000053 /* ChapterEditorView.swift */; };
+		B10000000000000000000054 /* ChapterXMLServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000054 /* ChapterXMLServiceTests.swift */; };
 		B10000000000000000000013 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000013 /* Assets.xcassets */; };
 		B10000000000000000000017 /* TestFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000017 /* TestFileManager.swift */; };
 		B10000000000000000000018 /* MKVToolnixLocatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000018 /* MKVToolnixLocatorTests.swift */; };
@@ -139,6 +144,11 @@
 		A10000000000000000000040 /* CodecExtensionMapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodecExtensionMapTests.swift; sourceTree = "<group>"; };
 		A10000000000000000000041 /* FileViewModelChangesetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileViewModelChangesetTests.swift; sourceTree = "<group>"; };
 		A10000000000000000000042 /* MKVChangesetIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MKVChangesetIntegrationTests.swift; sourceTree = "<group>"; };
+		A10000000000000000000050 /* MKVChapterEdition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MKVChapterEdition.swift; sourceTree = "<group>"; };
+		A10000000000000000000051 /* ChapterXMLService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterXMLService.swift; sourceTree = "<group>"; };
+		A10000000000000000000052 /* ChapterDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterDetailView.swift; sourceTree = "<group>"; };
+		A10000000000000000000053 /* ChapterEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterEditorView.swift; sourceTree = "<group>"; };
+		A10000000000000000000054 /* ChapterXMLServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterXMLServiceTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -204,6 +214,7 @@
 				A10000000000000000000004 /* MKVTrack.swift */,
 				A10000000000000000000005 /* MKVAttachment.swift */,
 				A10000000000000000000006 /* MKVTags.swift */,
+				A10000000000000000000050 /* MKVChapterEdition.swift */,
 			);
 			path = MKV;
 			sourceTree = "<group>";
@@ -227,6 +238,7 @@
 				A10000000000000000000033 /* MkvpropeditCommandBuilder.swift */,
 				A10000000000000000000037 /* FileDialogService.swift */,
 				A10000000000000000000038 /* FileOperationsService.swift */,
+				A10000000000000000000051 /* ChapterXMLService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -263,6 +275,7 @@
 				A1000000000000000000000C /* ContentView.swift */,
 				A1000000000000000000000D /* SidebarView.swift */,
 				A10000000000000000000027 /* TrackReorderView.swift */,
+				A10000000000000000000053 /* ChapterEditorView.swift */,
 				A1000000000000000000002B /* PendingChangesBar.swift */,
 				A10000000000000000000011 /* WelcomeView.swift */,
 				A10000000000000000000012 /* AboutView.swift */,
@@ -279,6 +292,7 @@
 				A10000000000000000000010 /* TrackRowView.swift */,
 				A10000000000000000000020 /* AttachmentDetailView.swift */,
 				A1000000000000000000000E /* FileSummaryView.swift */,
+				A10000000000000000000052 /* ChapterDetailView.swift */,
 			);
 			path = Detail;
 			sourceTree = "<group>";
@@ -311,6 +325,7 @@
 				A10000000000000000000019 /* MKVToolnixServiceTests.swift */,
 				A1000000000000000000003A /* CommandBuilderTests.swift */,
 				A10000000000000000000042 /* MKVChangesetIntegrationTests.swift */,
+				A10000000000000000000054 /* ChapterXMLServiceTests.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -472,6 +487,10 @@
 				B10000000000000000000037 /* FileDialogService.swift in Sources */,
 				B10000000000000000000038 /* FileOperationsService.swift in Sources */,
 				B10000000000000000000039 /* SidebarTreeBuilder.swift in Sources */,
+				B10000000000000000000050 /* MKVChapterEdition.swift in Sources */,
+				B10000000000000000000051 /* ChapterXMLService.swift in Sources */,
+				B10000000000000000000052 /* ChapterDetailView.swift in Sources */,
+				B10000000000000000000053 /* ChapterEditorView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -494,6 +513,7 @@
 				B10000000000000000000040 /* CodecExtensionMapTests.swift in Sources */,
 				B10000000000000000000041 /* FileViewModelChangesetTests.swift in Sources */,
 				B10000000000000000000042 /* MKVChangesetIntegrationTests.swift in Sources */,
+				B10000000000000000000054 /* ChapterXMLServiceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

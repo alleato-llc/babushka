@@ -12,6 +12,7 @@ final class AppViewModel {
     var showMissingToolAlert = false
     var selectedSidebarItem: SidebarItem?
     var reorderingFileId: UUID?
+    var editingChaptersFileId: UUID?
     var outputMode: OutputMode {
         get {
             OutputMode(rawValue: UserDefaults.standard.string(forKey: "outputMode") ?? OutputMode.backup.rawValue) ?? .backup

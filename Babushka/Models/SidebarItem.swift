@@ -6,6 +6,7 @@ enum SidebarItem: Identifiable, Hashable, Sendable {
     case track(id: UUID, track: MKVTrack)
     case attachmentGroup(id: UUID, count: Int)
     case attachment(id: UUID, attachment: MKVAttachment)
+    case chapterGroup(id: UUID, count: Int)
 
     var id: UUID {
         switch self {
@@ -14,6 +15,7 @@ enum SidebarItem: Identifiable, Hashable, Sendable {
         case .track(let id, _): id
         case .attachmentGroup(let id, _): id
         case .attachment(let id, _): id
+        case .chapterGroup(let id, _): id
         }
     }
 
@@ -29,6 +31,8 @@ enum SidebarItem: Identifiable, Hashable, Sendable {
             return "Attachments (\(count))"
         case .attachment(_, let attachment):
             return attachment.displayName
+        case .chapterGroup(_, let count):
+            return "Chapters (\(count))"
         }
     }
 
@@ -39,6 +43,7 @@ enum SidebarItem: Identifiable, Hashable, Sendable {
         case .track(_, let track): track.type.systemImage
         case .attachmentGroup: "paperclip"
         case .attachment: "paperclip"
+        case .chapterGroup: "list.number"
         }
     }
 

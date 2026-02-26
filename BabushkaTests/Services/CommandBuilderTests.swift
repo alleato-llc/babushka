@@ -277,4 +277,87 @@ struct CommandBuilderTests {
         #expect(args.contains("pixel-crop-top=138"))
         #expect(args.contains("pixel-crop-bottom=138"))
     }
+
+    // MARK: - Chapter Builder Tests
+
+    @Test("Mkvmerge with chapterFilePath generates --chapters before input file")
+    func mkvmergeChapterFilePath() {
+        let builder = MkvmergeCommandBuilder()
+        let changeset = ResolvedChangeset(
+            propertyEdits: [:],
+            removedTrackIds: [],
+            addedTracks: [],
+            trackOrder: nil,
+            hasStructuralChanges: false
+        )
+        let args = builder.buildArguments(
+            filePath: "/input.mkv", outputPath: "/output.mkv",
+            changeset: changeset, allTracks: [],
+            chapterFilePath: "/tmp/chapters.xml"
+        )
+        #expect(args.contains("--chapters"))
+        #expect(args.contains("/tmp/chapters.xml"))
+        // --chapters should appear before input file
+        let chaptersIndex = args.firstIndex(of: "--chapters")!
+        let inputIndex = args.firstIndex(of: "/input.mkv")!
+        #expect(chaptersIndex < inputIndex)
+    }
+
+    @Test("Mkvmerge with removeChapters generates --no-chapters before input file")
+    func mkvmergeRemoveChapters() {
+        let builder = MkvmergeCommandBuilder()
+        let changeset = ResolvedChangeset(
+            propertyEdits: [:],
+            removedTrackIds: [],
+            addedTracks: [],
+            trackOrder: nil,
+            hasStructuralChanges: false,
+            removeChapters: true
+        )
+        let args = builder.buildArguments(
+            filePath: "/input.mkv", outputPath: "/output.mkv",
+            changeset: changeset, allTracks: []
+        )
+        #expect(args.contains("--no-chapters"))
+        let noChaptersIndex = args.firstIndex(of: "--no-chapters")!
+        let inputIndex = args.firstIndex(of: "/input.mkv")!
+        #expect(noChaptersIndex < inputIndex)
+    }
+
+    @Test("Mkvpropedit with chapterFilePath generates --chapters")
+    func mkvpropeditChapterFilePath() {
+        let builder = MkvpropeditCommandBuilder()
+        let changeset = ResolvedChangeset(
+            propertyEdits: [:],
+            removedTrackIds: [],
+            addedTracks: [],
+            trackOrder: nil,
+            hasStructuralChanges: false
+        )
+        let args = builder.buildArguments(
+            filePath: "/input.mkv", changeset: changeset, allTracks: [],
+            chapterFilePath: "/tmp/chapters.xml"
+        )
+        #expect(args.contains("--chapters"))
+        #expect(args.contains("/tmp/chapters.xml"))
+    }
+
+    @Test("Mkvpropedit with removeChapters generates --chapters with empty string")
+    func mkvpropeditRemoveChapters() {
+        let builder = MkvpropeditCommandBuilder()
+        let changeset = ResolvedChangeset(
+            propertyEdits: [:],
+            removedTrackIds: [],
+            addedTracks: [],
+            trackOrder: nil,
+            hasStructuralChanges: false,
+            removeChapters: true
+        )
+        let args = builder.buildArguments(
+            filePath: "/input.mkv", changeset: changeset, allTracks: []
+        )
+        #expect(args.contains("--chapters"))
+        let chaptersIndex = args.firstIndex(of: "--chapters")!
+        #expect(args[chaptersIndex + 1] == "")
+    }
 }

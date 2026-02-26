@@ -126,6 +126,84 @@ struct SidebarTreeBuilderTests {
         }
     }
 
+    // MARK: - Chapter Group Tests
+
+    @Test("Chapter group appears when chapters exist")
+    func chapterGroupAppears() {
+        let identification = makeIdentification(
+            videoCount: 1, audioCount: 0, subtitleCount: 0, attachmentCount: 0,
+            chapterEditionCounts: [5]
+        )
+        let fileId = UUID()
+
+        let result = SidebarTreeBuilder.build(
+            fileId: fileId, fileName: "test.mkv",
+            identification: identification, existingChildren: nil
+        )
+
+        let fileChildren = result.children[fileId]!
+        let chapterGroups = fileChildren.filter {
+            if case .chapterGroup = $0 { return true }
+            return false
+        }
+        #expect(chapterGroups.count == 1)
+        if case .chapterGroup(_, let count) = chapterGroups[0] {
+            #expect(count == 5)
+        }
+    }
+
+    @Test("Chapter group absent when no chapters")
+    func chapterGroupAbsent() {
+        let identification = makeIdentification(
+            videoCount: 1, audioCount: 0, subtitleCount: 0, attachmentCount: 0
+        )
+        let fileId = UUID()
+
+        let result = SidebarTreeBuilder.build(
+            fileId: fileId, fileName: "test.mkv",
+            identification: identification, existingChildren: nil
+        )
+
+        let fileChildren = result.children[fileId]!
+        let chapterGroups = fileChildren.filter {
+            if case .chapterGroup = $0 { return true }
+            return false
+        }
+        #expect(chapterGroups.isEmpty)
+    }
+
+    @Test("Chapter group UUID preserved on rebuild")
+    func chapterGroupUUIDPreserved() {
+        let identification = makeIdentification(
+            videoCount: 0, audioCount: 0, subtitleCount: 0, attachmentCount: 0,
+            chapterEditionCounts: [3]
+        )
+        let fileId = UUID()
+
+        let initial = SidebarTreeBuilder.build(
+            fileId: fileId, fileName: "test.mkv",
+            identification: identification, existingChildren: nil
+        )
+
+        let rebuilt = SidebarTreeBuilder.build(
+            fileId: fileId, fileName: "test.mkv",
+            identification: identification, existingChildren: initial.children
+        )
+
+        let initialChapterUUID = initial.children[fileId]!.compactMap { item -> UUID? in
+            if case .chapterGroup(let id, _) = item { return id }
+            return nil
+        }.first
+
+        let rebuiltChapterUUID = rebuilt.children[fileId]!.compactMap { item -> UUID? in
+            if case .chapterGroup(let id, _) = item { return id }
+            return nil
+        }.first
+
+        #expect(initialChapterUUID != nil)
+        #expect(initialChapterUUID == rebuiltChapterUUID)
+    }
+
     // MARK: - Helpers
 
     private func collectTracks(from result: SidebarTreeBuilder.Result) -> [Int: UUID] {

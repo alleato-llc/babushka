@@ -9,6 +9,8 @@ struct SidebarView: View {
     var onRemoveTrack: ((MKVTrack, SidebarItem) -> Void)?
     var onAddTrack: ((FileViewModel, TrackType) -> Void)?
     var onReorderTracks: ((FileViewModel) -> Void)?
+    var onEditChapters: ((FileViewModel) -> Void)?
+    var onAddChapters: ((FileViewModel) -> Void)?
 
     var body: some View {
         List(selection: Binding(
@@ -67,6 +69,11 @@ struct SidebarView: View {
                         Button("Reorder Tracks...") {
                             onReorderTracks?(fileVM)
                         }
+                        if !fileVM.hasChapters {
+                            Button("Add Chapters...") {
+                                onAddChapters?(fileVM)
+                            }
+                        }
                         Divider()
                         Button("Close File") {
                             onCloseFile?(fileVM)
@@ -115,6 +122,15 @@ struct SidebarView: View {
                         .tag(item.id)
                 }
             }
+
+        case .chapterGroup:
+            Label(item.displayName, systemImage: item.systemImage)
+                .tag(item.id)
+                .contextMenu {
+                    Button("Edit Chapters...") {
+                        onEditChapters?(fileVM)
+                    }
+                }
 
         default:
             Label(item.displayName, systemImage: item.systemImage)

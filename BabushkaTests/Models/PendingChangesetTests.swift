@@ -279,4 +279,79 @@ struct PendingChangesetTests {
         #expect(resolved.addedTracks[0].addition.filePath == "/sub.srt")
         #expect(resolved.addedTracks[0].addition.language == "eng")
     }
+
+    // MARK: - Chapter Tests
+
+    @Test("Chapter edit replaces previous chapter edit")
+    func chapterEditReplacesPrevious() {
+        var cs = PendingChangeset()
+        let edition1 = [MKVChapterEdition(chapters: [MKVChapterAtom(timeStart: 0)])]
+        let edition2 = [MKVChapterEdition(chapters: [MKVChapterAtom(timeStart: 1000)])]
+        cs.editChapters(editions: edition1)
+        cs.editChapters(editions: edition2)
+        #expect(cs.operationCount == 1)
+
+        let resolved = cs.resolve(originalTracks: [])
+        #expect(resolved.chapterEdits?.count == 1)
+        #expect(resolved.chapterEdits?[0].chapters[0].timeStart == 1000)
+    }
+
+    @Test("Remove chapters replaces previous chapter edit")
+    func removeChaptersReplacesPreviousEdit() {
+        var cs = PendingChangeset()
+        let editions = [MKVChapterEdition(chapters: [MKVChapterAtom(timeStart: 0)])]
+        cs.editChapters(editions: editions)
+        cs.removeChapters()
+        #expect(cs.operationCount == 1)
+
+        let resolved = cs.resolve(originalTracks: [])
+        #expect(resolved.chapterEdits == nil)
+        #expect(resolved.removeChapters == true)
+    }
+
+    @Test("Chapter edit replaces previous remove chapters")
+    func chapterEditReplacesRemove() {
+        var cs = PendingChangeset()
+        cs.removeChapters()
+        let editions = [MKVChapterEdition(chapters: [MKVChapterAtom(timeStart: 0)])]
+        cs.editChapters(editions: editions)
+        #expect(cs.operationCount == 1)
+
+        let resolved = cs.resolve(originalTracks: [])
+        #expect(resolved.chapterEdits != nil)
+        #expect(resolved.removeChapters == false)
+    }
+
+    @Test("Resolve includes chapter edits")
+    func resolveIncludesChapterEdits() {
+        var cs = PendingChangeset()
+        let editions = [MKVChapterEdition(chapters: [
+            MKVChapterAtom(timeStart: 0, displays: [ChapterDisplay(string: "Intro")]),
+            MKVChapterAtom(timeStart: 60_000_000_000, displays: [ChapterDisplay(string: "Main")]),
+        ])]
+        cs.editChapters(editions: editions)
+
+        let resolved = cs.resolve(originalTracks: [])
+        #expect(resolved.chapterEdits?.count == 1)
+        #expect(resolved.chapterEdits?[0].chapters.count == 2)
+    }
+
+    @Test("Chapters don't affect hasStructuralChanges")
+    func chaptersDontAffectHasStructuralChanges() {
+        var cs = PendingChangeset()
+        let editions = [MKVChapterEdition(chapters: [MKVChapterAtom(timeStart: 0)])]
+        cs.editChapters(editions: editions)
+
+        let resolved = cs.resolve(originalTracks: [])
+        #expect(!resolved.hasStructuralChanges)
+    }
+
+    @Test("Remove chapters doesn't affect hasStructuralChanges")
+    func removeChaptersDontAffectHasStructuralChanges() {
+        var cs = PendingChangeset()
+        cs.removeChapters()
+
+        let resolved = cs.resolve(originalTracks: [])
+        #expect(!resolved.hasStructuralChanges)
+    }
 }

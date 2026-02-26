@@ -5,6 +5,8 @@ enum ChangesetOperation: Sendable, Identifiable {
     case removeTrack(trackId: Int)
     case addTrack(id: UUID, addition: TrackFileAddition)
     case reorder(trackOrder: [Int])
+    case editChapters(editions: [MKVChapterEdition])
+    case removeChapters
 
     var id: String {
         switch self {
@@ -12,6 +14,8 @@ enum ChangesetOperation: Sendable, Identifiable {
         case .removeTrack(let trackId): "remove-\(trackId)-\(UUID())"
         case .addTrack(let id, _): "add-\(id)"
         case .reorder: "reorder-\(UUID())"
+        case .editChapters: "editChapters-\(UUID())"
+        case .removeChapters: "removeChapters-\(UUID())"
         }
     }
 }
@@ -22,6 +26,26 @@ struct ResolvedChangeset: Sendable {
     let addedTracks: [(id: UUID, addition: TrackFileAddition)]
     let trackOrder: [Int]?
     let hasStructuralChanges: Bool
+    let chapterEdits: [MKVChapterEdition]?
+    let removeChapters: Bool
+
+    init(
+        propertyEdits: [Int: TrackPropertyEdits],
+        removedTrackIds: Set<Int>,
+        addedTracks: [(id: UUID, addition: TrackFileAddition)],
+        trackOrder: [Int]?,
+        hasStructuralChanges: Bool,
+        chapterEdits: [MKVChapterEdition]? = nil,
+        removeChapters: Bool = false
+    ) {
+        self.propertyEdits = propertyEdits
+        self.removedTrackIds = removedTrackIds
+        self.addedTracks = addedTracks
+        self.trackOrder = trackOrder
+        self.hasStructuralChanges = hasStructuralChanges
+        self.chapterEdits = chapterEdits
+        self.removeChapters = removeChapters
+    }
 }
 
 struct PendingChangeset: Sendable {
@@ -62,6 +86,26 @@ struct PendingChangeset: Sendable {
         undoStack.removeAll()
     }
 
+    mutating func editChapters(editions: [MKVChapterEdition]) {
+        operations.removeAll { op in
+            if case .editChapters = op { return true }
+            if case .removeChapters = op { return true }
+            return false
+        }
+        operations.append(.editChapters(editions: editions))
+        undoStack.removeAll()
+    }
+
+    mutating func removeChapters() {
+        operations.removeAll { op in
+            if case .editChapters = op { return true }
+            if case .removeChapters = op { return true }
+            return false
+        }
+        operations.append(.removeChapters)
+        undoStack.removeAll()
+    }
+
     mutating func undo() {
         guard let last = operations.popLast() else { return }
         undoStack.append(last)
@@ -82,6 +126,8 @@ struct PendingChangeset: Sendable {
         var removedIds: Set<Int> = []
         var addedTracks: [(id: UUID, addition: TrackFileAddition)] = []
         var latestOrder: [Int]?
+        var chapterEdits: [MKVChapterEdition]?
+        var shouldRemoveChapters = false
 
         for op in operations {
             switch op {
@@ -109,6 +155,14 @@ struct PendingChangeset: Sendable {
 
             case .reorder(let order):
                 latestOrder = order
+
+            case .editChapters(let editions):
+                chapterEdits = editions
+                shouldRemoveChapters = false
+
+            case .removeChapters:
+                chapterEdits = nil
+                shouldRemoveChapters = true
             }
         }
 
@@ -145,7 +199,9 @@ struct PendingChangeset: Sendable {
             removedTrackIds: removedIds,
             addedTracks: addedTracks,
             trackOrder: latestOrder,
-            hasStructuralChanges: hasStructural
+            hasStructuralChanges: hasStructural,
+            chapterEdits: chapterEdits,
+            removeChapters: shouldRemoveChapters
         )
     }
 }

@@ -21,7 +21,12 @@ final class FileViewModel: Identifiable {
 
     private(set) var changeset = PendingChangeset()
 
+    private(set) var chapterEditions: [MKVChapterEdition]?
+    private(set) var isLoadingChapters = false
+    private(set) var chapterLoadError: String?
+
     private let service: MKVToolnixService
+    private let chapterXMLService = ChapterXMLService()
 
     init(filePath: String, service: MKVToolnixService) {
         self.filePath = filePath
@@ -107,6 +112,50 @@ final class FileViewModel: Identifiable {
             return attachment
         }
         return nil
+    }
+
+    // MARK: - Chapters
+
+    var hasChapters: Bool {
+        guard let identification else { return false }
+        return identification.chapters.contains { ($0.numEntries ?? 0) > 0 }
+    }
+
+    var effectiveChapters: [MKVChapterEdition]? {
+        let resolved = resolvedChangeset
+        if resolved.removeChapters {
+            return []
+        }
+        if let edits = resolved.chapterEdits {
+            return edits
+        }
+        return chapterEditions
+    }
+
+    func loadChapters() async {
+        guard chapterEditions == nil, !isLoadingChapters else { return }
+        isLoadingChapters = true
+        chapterLoadError = nil
+
+        do {
+            if let xml = try await service.extractChapters(filePath: filePath) {
+                chapterEditions = try chapterXMLService.parse(xmlString: xml)
+            } else {
+                chapterEditions = []
+            }
+        } catch {
+            chapterLoadError = error.localizedDescription
+        }
+
+        isLoadingChapters = false
+    }
+
+    func editChapters(editions: [MKVChapterEdition]) {
+        changeset.editChapters(editions: editions)
+    }
+
+    func removeAllChapters() {
+        changeset.removeChapters()
     }
 
     // MARK: - Changeset

@@ -52,6 +52,38 @@ actor MKVExtractionService {
         return outputPath
     }
 
+    func extractChapters(filePath: String) async throws -> String? {
+        guard FileManager.default.fileExists(atPath: filePath) else {
+            throw MKVToolnixError.fileNotFound(filePath)
+        }
+
+        let info = try await getToolInfo()
+
+        let tempDir = FileManager.default.temporaryDirectory
+            .appendingPathComponent("babushka-chapters", isDirectory: true)
+        try FileManager.default.createDirectory(at: tempDir, withIntermediateDirectories: true)
+
+        let outputPath = tempDir.appendingPathComponent("\(UUID().uuidString).xml").path
+
+        let (_, stderr, exitCode) = try await processRunner.run(
+            executablePath: info.mkvextractPath,
+            arguments: [filePath, "chapters", outputPath]
+        )
+
+        guard exitCode <= 1 else {
+            throw MKVToolnixError.processError(exitCode: exitCode, stderr: stderr)
+        }
+
+        defer { try? FileManager.default.removeItem(atPath: outputPath) }
+
+        guard FileManager.default.fileExists(atPath: outputPath) else {
+            return nil
+        }
+
+        let content = try String(contentsOfFile: outputPath, encoding: .utf8)
+        return content.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? nil : content
+    }
+
     func extractAttachmentTo(filePath: String, attachmentId: Int, outputPath: String) async throws {
         guard FileManager.default.fileExists(atPath: filePath) else {
             throw MKVToolnixError.fileNotFound(filePath)

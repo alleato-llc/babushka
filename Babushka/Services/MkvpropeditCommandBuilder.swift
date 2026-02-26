@@ -3,7 +3,8 @@ import Foundation
 struct MkvpropeditCommandBuilder: Sendable {
     func buildArguments(
         filePath: String,
-        changeset: ResolvedChangeset, allTracks: [MKVTrack]
+        changeset: ResolvedChangeset, allTracks: [MKVTrack],
+        chapterFilePath: String? = nil
     ) -> [String] {
         var arguments: [String] = [filePath]
 
@@ -61,6 +62,13 @@ struct MkvpropeditCommandBuilder: Sendable {
             if let val = edits.crop.pixelCropRight {
                 arguments.append(contentsOf: ["--set", "pixel-crop-right=\(val)"])
             }
+        }
+
+        // Chapter options
+        if changeset.removeChapters {
+            arguments.append(contentsOf: ["--chapters", ""])
+        } else if let chapterPath = chapterFilePath {
+            arguments.append(contentsOf: ["--chapters", chapterPath])
         }
 
         return arguments

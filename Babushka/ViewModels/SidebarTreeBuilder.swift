@@ -17,6 +17,7 @@ struct SidebarTreeBuilder: Sendable {
         var trackTypeToGroupUUID: [TrackType: UUID] = [:]
         var attachmentGroupUUID: UUID?
         var attachmentIdToUUID: [Int: UUID] = [:]
+        var chapterGroupUUID: UUID?
 
         if let existingChildren {
             for (_, children) in existingChildren {
@@ -30,6 +31,8 @@ struct SidebarTreeBuilder: Sendable {
                         attachmentGroupUUID = uuid
                     case .attachment(let uuid, let attachment):
                         attachmentIdToUUID[attachment.id] = uuid
+                    case .chapterGroup(let uuid, _):
+                        chapterGroupUUID = uuid
                     default:
                         break
                     }
@@ -72,6 +75,13 @@ struct SidebarTreeBuilder: Sendable {
                 return SidebarItem.attachment(id: attachmentUUID, attachment: attachment)
             }
             children[groupId] = attachmentItems
+        }
+
+        let chapterTotal = identification.chapters.reduce(0) { $0 + ($1.numEntries ?? 0) }
+        if chapterTotal > 0 {
+            let groupId = chapterGroupUUID ?? UUID()
+            let groupItem = SidebarItem.chapterGroup(id: groupId, count: chapterTotal)
+            fileChildren.append(groupItem)
         }
 
         children[fileId] = fileChildren

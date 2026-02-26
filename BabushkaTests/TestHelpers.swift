@@ -42,7 +42,8 @@ func makeTrack(
 }
 
 func makeIdentification(
-    videoCount: Int, audioCount: Int, subtitleCount: Int, attachmentCount: Int
+    videoCount: Int, audioCount: Int, subtitleCount: Int, attachmentCount: Int,
+    chapterEditionCounts: [Int] = []
 ) -> MKVIdentification {
     var tracks: [[String: Any]] = []
     var trackId = 0
@@ -65,9 +66,14 @@ func makeIdentification(
         attachments.append(["id": i + 1, "size": 100, "content_type": "image/png", "file_name": "attach_\(i).png"])
     }
 
+    var chapters: [[String: Any]] = []
+    for count in chapterEditionCounts {
+        chapters.append(["num_entries": count])
+    }
+
     let json: [String: Any] = [
         "attachments": attachments,
-        "chapters": [] as [[String: Any]],
+        "chapters": chapters,
         "container": [
             "properties": ["container_type": 17, "duration": 1000000000],
             "recognized": true,
