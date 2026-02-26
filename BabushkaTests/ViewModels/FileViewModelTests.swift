@@ -2,7 +2,7 @@ import Foundation
 import Testing
 @testable import Babushka
 
-@Suite("FileViewModel")
+@Suite("FileViewModel Integration")
 struct FileViewModelTests {
 
     @Test("Sidebar tree construction from test5.mkv")

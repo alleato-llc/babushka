@@ -6,6 +6,7 @@ final class JobsViewModel {
     private(set) var jobs: [ExportJob] = []
 
     private let service: MKVToolnixService
+    private let fileOps = FileOperationsService()
 
     init(service: MKVToolnixService) {
         self.service = service
@@ -99,17 +100,9 @@ final class JobsViewModel {
                     // Handle output mode file operations
                     switch outputMode {
                     case .backup:
-                        let backupPath = filePath + ".bak"
-                        let fm = FileManager.default
-                        if fm.fileExists(atPath: backupPath) {
-                            try fm.removeItem(atPath: backupPath)
-                        }
-                        try fm.moveItem(atPath: filePath, toPath: backupPath)
-                        try fm.moveItem(atPath: outputPath, toPath: filePath)
+                        try fileOps.backupAndReplace(originalPath: filePath, newFilePath: outputPath)
                     case .inline:
-                        let fm = FileManager.default
-                        try fm.removeItem(atPath: filePath)
-                        try fm.moveItem(atPath: outputPath, toPath: filePath)
+                        try fileOps.replaceInline(originalPath: filePath, newFilePath: outputPath)
                     case .specifyLocation:
                         break // output already at user-chosen path
                     }

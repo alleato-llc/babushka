@@ -50,6 +50,20 @@ struct CropPresetTests {
         #expect(crop == nil)
     }
 
+    @Test("1.85:1 on 1920x1080 crops vertically")
+    func theatrical185() {
+        let crop = CropPreset.theatrical185.cropValues(sourceWidth: 1920, sourceHeight: 1080)
+        #expect(crop != nil)
+        let c = crop!
+        // Target height = 1920 / 1.85 ≈ 1037.8, total vertical crop ≈ 42.2
+        // Each side ≈ 21
+        #expect(c.top >= 21 && c.top <= 22)
+        #expect(c.bottom >= 21 && c.bottom <= 22)
+        #expect(c.left == 0)
+        #expect(c.right == 0)
+        #expect(abs(c.top - c.bottom) <= 1)
+    }
+
     @Test("1:1 on 1920x1080 crops horizontally")
     func square1x1() {
         let crop = CropPreset.square1x1.cropValues(sourceWidth: 1920, sourceHeight: 1080)

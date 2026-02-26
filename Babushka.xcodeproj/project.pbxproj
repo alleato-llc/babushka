@@ -40,6 +40,25 @@
 		B1000000000000000000002C /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000002C /* SettingsView.swift */; };
 		B1000000000000000000002D /* CropPreset.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000002D /* CropPreset.swift */; };
 		B1000000000000000000002E /* CropPresetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000002E /* CropPresetTests.swift */; };
+		B10000000000000000000030 /* ProcessRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000030 /* ProcessRunner.swift */; };
+		B10000000000000000000031 /* MKVToolnixError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000031 /* MKVToolnixError.swift */; };
+		B10000000000000000000032 /* MkvmergeCommandBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000032 /* MkvmergeCommandBuilder.swift */; };
+		B10000000000000000000033 /* MkvpropeditCommandBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000033 /* MkvpropeditCommandBuilder.swift */; };
+		B10000000000000000000034 /* MKVIdentificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000034 /* MKVIdentificationService.swift */; };
+		B10000000000000000000035 /* MKVExtractionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000035 /* MKVExtractionService.swift */; };
+		B10000000000000000000036 /* MKVChangesetService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000036 /* MKVChangesetService.swift */; };
+		B10000000000000000000037 /* FileDialogService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000037 /* FileDialogService.swift */; };
+		B10000000000000000000038 /* FileOperationsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000038 /* FileOperationsService.swift */; };
+		B10000000000000000000039 /* SidebarTreeBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000039 /* SidebarTreeBuilder.swift */; };
+		B1000000000000000000003A /* CommandBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000003A /* CommandBuilderTests.swift */; };
+		B1000000000000000000003B /* SidebarTreeBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000003B /* SidebarTreeBuilderTests.swift */; };
+		B1000000000000000000003C /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000003C /* TestHelpers.swift */; };
+		B1000000000000000000003D /* PendingChangesetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000003D /* PendingChangesetTests.swift */; };
+		B1000000000000000000003E /* TrackPropertyEditsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000003E /* TrackPropertyEditsTests.swift */; };
+		B1000000000000000000003F /* ExportJobTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000003F /* ExportJobTests.swift */; };
+		B10000000000000000000040 /* CodecExtensionMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000040 /* CodecExtensionMapTests.swift */; };
+		B10000000000000000000041 /* FileViewModelChangesetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000041 /* FileViewModelChangesetTests.swift */; };
+		B10000000000000000000042 /* MKVChangesetIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000042 /* MKVChangesetIntegrationTests.swift */; };
 		B10000000000000000000013 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000013 /* Assets.xcassets */; };
 		B10000000000000000000017 /* TestFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000017 /* TestFileManager.swift */; };
 		B10000000000000000000018 /* MKVToolnixLocatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000018 /* MKVToolnixLocatorTests.swift */; };
@@ -101,6 +120,25 @@
 		A1000000000000000000002C /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		A1000000000000000000002D /* CropPreset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CropPreset.swift; sourceTree = "<group>"; };
 		A1000000000000000000002E /* CropPresetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CropPresetTests.swift; sourceTree = "<group>"; };
+		A10000000000000000000030 /* ProcessRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessRunner.swift; sourceTree = "<group>"; };
+		A10000000000000000000031 /* MKVToolnixError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MKVToolnixError.swift; sourceTree = "<group>"; };
+		A10000000000000000000032 /* MkvmergeCommandBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MkvmergeCommandBuilder.swift; sourceTree = "<group>"; };
+		A10000000000000000000033 /* MkvpropeditCommandBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MkvpropeditCommandBuilder.swift; sourceTree = "<group>"; };
+		A10000000000000000000034 /* MKVIdentificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MKVIdentificationService.swift; sourceTree = "<group>"; };
+		A10000000000000000000035 /* MKVExtractionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MKVExtractionService.swift; sourceTree = "<group>"; };
+		A10000000000000000000036 /* MKVChangesetService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MKVChangesetService.swift; sourceTree = "<group>"; };
+		A10000000000000000000037 /* FileDialogService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileDialogService.swift; sourceTree = "<group>"; };
+		A10000000000000000000038 /* FileOperationsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileOperationsService.swift; sourceTree = "<group>"; };
+		A10000000000000000000039 /* SidebarTreeBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarTreeBuilder.swift; sourceTree = "<group>"; };
+		A1000000000000000000003A /* CommandBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandBuilderTests.swift; sourceTree = "<group>"; };
+		A1000000000000000000003B /* SidebarTreeBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarTreeBuilderTests.swift; sourceTree = "<group>"; };
+		A1000000000000000000003C /* TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHelpers.swift; sourceTree = "<group>"; };
+		A1000000000000000000003D /* PendingChangesetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingChangesetTests.swift; sourceTree = "<group>"; };
+		A1000000000000000000003E /* TrackPropertyEditsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackPropertyEditsTests.swift; sourceTree = "<group>"; };
+		A1000000000000000000003F /* ExportJobTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportJobTests.swift; sourceTree = "<group>"; };
+		A10000000000000000000040 /* CodecExtensionMapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodecExtensionMapTests.swift; sourceTree = "<group>"; };
+		A10000000000000000000041 /* FileViewModelChangesetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileViewModelChangesetTests.swift; sourceTree = "<group>"; };
+		A10000000000000000000042 /* MKVChangesetIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MKVChangesetIntegrationTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,31 +185,64 @@
 		G10000000000000000000003 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				A10000000000000000000002 /* MKVIdentification.swift */,
-				A10000000000000000000003 /* MKVContainer.swift */,
-				A10000000000000000000004 /* MKVTrack.swift */,
-				A10000000000000000000005 /* MKVAttachment.swift */,
-				A10000000000000000000006 /* MKVTags.swift */,
+				G1000000000000000000000C /* MKV */,
+				G1000000000000000000000D /* Changeset */,
 				A10000000000000000000007 /* SidebarItem.swift */,
 				A10000000000000000000021 /* CodecExtensionMap.swift */,
 				A10000000000000000000022 /* ExportJob.swift */,
-				A10000000000000000000025 /* TrackPropertyEdits.swift */,
-				A10000000000000000000026 /* TrackFileAddition.swift */,
-				A10000000000000000000028 /* PendingChangeset.swift */,
 				A10000000000000000000029 /* OutputMode.swift */,
-				A1000000000000000000002A /* TrackPropertyKey.swift */,
 				A1000000000000000000002D /* CropPreset.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
 		};
+		G1000000000000000000000C /* MKV */ = {
+			isa = PBXGroup;
+			children = (
+				A10000000000000000000002 /* MKVIdentification.swift */,
+				A10000000000000000000003 /* MKVContainer.swift */,
+				A10000000000000000000004 /* MKVTrack.swift */,
+				A10000000000000000000005 /* MKVAttachment.swift */,
+				A10000000000000000000006 /* MKVTags.swift */,
+			);
+			path = MKV;
+			sourceTree = "<group>";
+		};
+		G1000000000000000000000D /* Changeset */ = {
+			isa = PBXGroup;
+			children = (
+				A10000000000000000000028 /* PendingChangeset.swift */,
+				A10000000000000000000025 /* TrackPropertyEdits.swift */,
+				A1000000000000000000002A /* TrackPropertyKey.swift */,
+				A10000000000000000000026 /* TrackFileAddition.swift */,
+			);
+			path = Changeset;
+			sourceTree = "<group>";
+		};
 		G10000000000000000000004 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				A10000000000000000000008 /* MKVToolnixLocator.swift */,
-				A10000000000000000000009 /* MKVToolnixService.swift */,
+				G1000000000000000000000E /* MKVToolnix */,
+				A10000000000000000000032 /* MkvmergeCommandBuilder.swift */,
+				A10000000000000000000033 /* MkvpropeditCommandBuilder.swift */,
+				A10000000000000000000037 /* FileDialogService.swift */,
+				A10000000000000000000038 /* FileOperationsService.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		G1000000000000000000000E /* MKVToolnix */ = {
+			isa = PBXGroup;
+			children = (
+				A10000000000000000000009 /* MKVToolnixService.swift */,
+				A10000000000000000000008 /* MKVToolnixLocator.swift */,
+				A10000000000000000000031 /* MKVToolnixError.swift */,
+				A10000000000000000000034 /* MKVIdentificationService.swift */,
+				A10000000000000000000035 /* MKVExtractionService.swift */,
+				A10000000000000000000036 /* MKVChangesetService.swift */,
+				A10000000000000000000030 /* ProcessRunner.swift */,
+			);
+			path = MKVToolnix;
 			sourceTree = "<group>";
 		};
 		G10000000000000000000005 /* ViewModels */ = {
@@ -180,6 +251,7 @@
 				A1000000000000000000000A /* AppViewModel.swift */,
 				A1000000000000000000000B /* FileViewModel.swift */,
 				A10000000000000000000023 /* JobsViewModel.swift */,
+				A10000000000000000000039 /* SidebarTreeBuilder.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -187,20 +259,28 @@
 		G10000000000000000000006 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				G1000000000000000000000F /* Detail */,
 				A1000000000000000000000C /* ContentView.swift */,
 				A1000000000000000000000D /* SidebarView.swift */,
-				A1000000000000000000000E /* FileSummaryView.swift */,
-				A1000000000000000000000F /* TrackDetailView.swift */,
-				A10000000000000000000010 /* TrackRowView.swift */,
-				A10000000000000000000011 /* WelcomeView.swift */,
-				A10000000000000000000012 /* AboutView.swift */,
-				A10000000000000000000020 /* AttachmentDetailView.swift */,
-				A10000000000000000000024 /* JobsPopoverView.swift */,
 				A10000000000000000000027 /* TrackReorderView.swift */,
 				A1000000000000000000002B /* PendingChangesBar.swift */,
+				A10000000000000000000011 /* WelcomeView.swift */,
+				A10000000000000000000012 /* AboutView.swift */,
 				A1000000000000000000002C /* SettingsView.swift */,
+				A10000000000000000000024 /* JobsPopoverView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		G1000000000000000000000F /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				A1000000000000000000000F /* TrackDetailView.swift */,
+				A10000000000000000000010 /* TrackRowView.swift */,
+				A10000000000000000000020 /* AttachmentDetailView.swift */,
+				A1000000000000000000000E /* FileSummaryView.swift */,
+			);
+			path = Detail;
 			sourceTree = "<group>";
 		};
 		G10000000000000000000007 /* Products */ = {
@@ -216,6 +296,7 @@
 			isa = PBXGroup;
 			children = (
 				A10000000000000000000017 /* TestFileManager.swift */,
+				A1000000000000000000003C /* TestHelpers.swift */,
 				G10000000000000000000009 /* Services */,
 				G1000000000000000000000A /* Models */,
 				G1000000000000000000000B /* ViewModels */,
@@ -228,6 +309,8 @@
 			children = (
 				A10000000000000000000018 /* MKVToolnixLocatorTests.swift */,
 				A10000000000000000000019 /* MKVToolnixServiceTests.swift */,
+				A1000000000000000000003A /* CommandBuilderTests.swift */,
+				A10000000000000000000042 /* MKVChangesetIntegrationTests.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -237,6 +320,10 @@
 			children = (
 				A1000000000000000000001A /* MKVIdentificationTests.swift */,
 				A1000000000000000000002E /* CropPresetTests.swift */,
+				A1000000000000000000003D /* PendingChangesetTests.swift */,
+				A1000000000000000000003E /* TrackPropertyEditsTests.swift */,
+				A1000000000000000000003F /* ExportJobTests.swift */,
+				A10000000000000000000040 /* CodecExtensionMapTests.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -245,6 +332,8 @@
 			isa = PBXGroup;
 			children = (
 				A1000000000000000000001B /* FileViewModelTests.swift */,
+				A1000000000000000000003B /* SidebarTreeBuilderTests.swift */,
+				A10000000000000000000041 /* FileViewModelChangesetTests.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -373,6 +462,16 @@
 				B1000000000000000000002B /* PendingChangesBar.swift in Sources */,
 				B1000000000000000000002C /* SettingsView.swift in Sources */,
 				B1000000000000000000002D /* CropPreset.swift in Sources */,
+				B10000000000000000000030 /* ProcessRunner.swift in Sources */,
+				B10000000000000000000031 /* MKVToolnixError.swift in Sources */,
+				B10000000000000000000032 /* MkvmergeCommandBuilder.swift in Sources */,
+				B10000000000000000000033 /* MkvpropeditCommandBuilder.swift in Sources */,
+				B10000000000000000000034 /* MKVIdentificationService.swift in Sources */,
+				B10000000000000000000035 /* MKVExtractionService.swift in Sources */,
+				B10000000000000000000036 /* MKVChangesetService.swift in Sources */,
+				B10000000000000000000037 /* FileDialogService.swift in Sources */,
+				B10000000000000000000038 /* FileOperationsService.swift in Sources */,
+				B10000000000000000000039 /* SidebarTreeBuilder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -386,6 +485,15 @@
 				B1000000000000000000001A /* MKVIdentificationTests.swift in Sources */,
 				B1000000000000000000001B /* FileViewModelTests.swift in Sources */,
 				B1000000000000000000002E /* CropPresetTests.swift in Sources */,
+				B1000000000000000000003A /* CommandBuilderTests.swift in Sources */,
+				B1000000000000000000003B /* SidebarTreeBuilderTests.swift in Sources */,
+				B1000000000000000000003C /* TestHelpers.swift in Sources */,
+				B1000000000000000000003D /* PendingChangesetTests.swift in Sources */,
+				B1000000000000000000003E /* TrackPropertyEditsTests.swift in Sources */,
+				B1000000000000000000003F /* ExportJobTests.swift in Sources */,
+				B10000000000000000000040 /* CodecExtensionMapTests.swift in Sources */,
+				B10000000000000000000041 /* FileViewModelChangesetTests.swift in Sources */,
+				B10000000000000000000042 /* MKVChangesetIntegrationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -537,7 +645,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.1.0; // x-release-please-version
 				PRODUCT_BUNDLE_IDENTIFIER = com.alleato.Babushka;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -564,7 +672,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.1.0; // x-release-please-version
 				PRODUCT_BUNDLE_IDENTIFIER = com.alleato.Babushka;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -580,7 +688,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.1.0; // x-release-please-version
 				PRODUCT_BUNDLE_IDENTIFIER = com.alleato.BabushkaTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
@@ -597,7 +705,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.1.0; // x-release-please-version
 				PRODUCT_BUNDLE_IDENTIFIER = com.alleato.BabushkaTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;

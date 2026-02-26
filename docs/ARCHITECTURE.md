@@ -8,30 +8,32 @@ Babushka is a macOS SwiftUI application that inspects and edits MKV files by lev
 
 ### Inspection
 ```
-mkvmerge -J <file> → JSON → MKVToolnixService → MKVIdentification → FileViewModel → Views
+mkvmerge -J <file> → JSON → MKVIdentificationService → MKVIdentification → FileViewModel → Views
 ```
 
 ### Editing
 ```
-User edits → TrackPropertyEdits → PendingChangeset → ResolvedChangeset → MKVToolnixService
-                                                                          ├─ mkvpropedit (property-only)
-                                                                          └─ mkvmerge -o  (structural)
+User edits → TrackPropertyEdits → PendingChangeset → ResolvedChangeset → MKVChangesetService
+                                                                          ├─ MkvpropeditCommandBuilder → mkvpropedit (property-only)
+                                                                          └─ MkvmergeCommandBuilder → mkvmerge -o  (structural)
 ```
 
 1. User opens an MKV file
-2. `MKVToolnixService` spawns `mkvmerge -J` as a child process
+2. `MKVIdentificationService` spawns `mkvmerge -J` via `ProcessRunner`
 3. JSON output is decoded into `MKVIdentification` model tree
-4. `FileViewModel` constructs a sidebar tree (groups tracks by type)
+4. `FileViewModel` delegates to `SidebarTreeBuilder` to construct the sidebar tree (groups tracks by type)
 5. Views render the data via NavigationSplitView
 6. User edits accumulate in `PendingChangeset` as `ChangesetOperation` entries
-7. On apply, the changeset resolves and dispatches to the appropriate mkvtoolnix tool
+7. On apply, the changeset resolves and dispatches to `MKVChangesetService`
+8. `MKVChangesetService` uses command builders to construct argument arrays, then `ProcessRunner` to execute
 
 ## Layers
 
 ### Models (`Babushka/Models/`)
 
-Pure data types, all `Codable` and `Sendable`:
+Pure data types, all `Codable` and `Sendable`, organized into subfolders:
 
+#### MKV (`Models/MKV/`)
 - **MKVIdentification** — Root type for mkvmerge JSON output
 - **MKVContainer / ContainerProperties** — File container metadata (duration, muxing app, dates)
 - **MKVTrack / TrackProperties** — Track data with nested grouping:
@@ -40,37 +42,53 @@ Pure data types, all `Codable` and `Sendable`:
   - `TrackProperties.AudioInfo` — channels, sampling frequency, bits per sample
 - **MKVAttachment / AttachmentProperties** — Embedded file attachments
 - **MKVTags** — Global and per-track tag metadata
-- **SidebarItem** — Enum representing sidebar tree nodes
+
+#### Changeset (`Models/Changeset/`)
 - **TrackPropertyEdits** — Mutable edit state with nested grouping:
   - `TrackPropertyEdits.FlagEdits` — flag changes
   - `TrackPropertyEdits.CropEdits` — pixel crop changes
 - **PendingChangeset / ResolvedChangeset** — Ordered operation queue with merge-and-diff resolution
+- **TrackPropertyKey** — Enum of editable property identifiers
 - **TrackFileAddition** — Data for adding external tracks
+
+#### Root Models
+- **SidebarItem** — Enum representing sidebar tree nodes
 - **ExportJob** — Background job state machine (pending → running → completed/failed)
 - **OutputMode** — Backup original, overwrite in place, or choose location
 - **CropPreset** — Aspect ratio presets for pixel crop editing
 - **CodecExtensionMap** — Codec ID → file extension lookup for track export
-- **TrackPropertyKey** — Enum of editable property identifiers
 
 `TrackProperties` uses a custom `init(from: Decoder)` with `DynamicCodingKeys` to capture all `tag_*` JSON keys into a `[String: String]` dictionary. The custom Codable implementation flattens nested structs to/from the flat JSON format that mkvmerge produces.
 
 ### Services (`Babushka/Services/`)
 
-Actor-isolated types for safe concurrent access:
+Actor-isolated types for safe concurrent access, organized into subfolders:
 
+#### MKVToolnix (`Services/MKVToolnix/`)
+- **MKVToolnixService** — Thin facade that delegates to the three sub-services below. Preserves a unified API for callers (ViewModels, tests).
+- **MKVIdentificationService** — Runs `mkvmerge -J`, decodes JSON into `MKVIdentification`. Caches tool info.
+- **MKVExtractionService** — Runs `mkvextract` for track and attachment extraction.
+- **MKVChangesetService** — Routes changesets to mkvpropedit (property-only) or mkvmerge (structural changes). Uses command builders for argument construction.
 - **MKVToolnixLocator** — Finds mkvmerge/mkvpropedit/mkvextract binaries by searching known paths (`/opt/homebrew/bin`, `/usr/local/bin`) and falling back to `which`. Validates executability and parses version strings.
-- **MKVToolnixService** — Executes mkvtoolnix commands:
-  - `identify()` — runs `mkvmerge -J`, decodes JSON
-  - `applyChangeset()` — routes to mkvpropedit (property-only) or mkvmerge (structural changes)
-  - `extractTrack()` / `extractAttachment()` — runs mkvextract
+- **MKVToolnixError** — Error enum for all mkvtoolnix operations.
+- **ProcessRunner** — Standalone actor that wraps `Process` execution. Shared by all sub-services.
+
+#### Command Builders
+- **MkvmergeCommandBuilder** — Pure `Sendable` struct that builds mkvmerge argument arrays from a `ResolvedChangeset`. Handles track removal selection, property edit flags, track ordering, and added track files.
+- **MkvpropeditCommandBuilder** — Pure `Sendable` struct that builds mkvpropedit argument arrays. Handles UID/number selectors, flag edits, name/language edits, and crop edits.
+
+#### Other Services
+- **FileDialogService** — `@MainActor` struct consolidating NSOpenPanel/NSSavePanel usage into reusable methods.
+- **FileOperationsService** — `Sendable` struct for file backup and inline replacement operations.
 
 ### ViewModels (`Babushka/ViewModels/`)
 
 `@Observable`, `@MainActor` classes:
 
-- **AppViewModel** — App-wide state: tool availability, open files, navigation selection, NSOpenPanel, export operations, undo/redo
-- **FileViewModel** — Per-file state: loading state machine, parsed identification data, sidebar tree construction, changeset management, effective value queries (merges pending edits with original values), property modification tracking
+- **AppViewModel** — App-wide state: tool availability, open files, navigation selection, file dialogs, export operations, undo/redo
+- **FileViewModel** — Per-file state: loading state machine, parsed identification data, changeset management, effective value queries (merges pending edits with original values), property modification tracking
 - **JobsViewModel** — Background job queue: execution, status monitoring, completion callbacks
+- **SidebarTreeBuilder** — Pure `Sendable` struct that builds sidebar tree from `MKVIdentification`. Supports fresh builds (new UUIDs) and rebuilds (preserves existing UUIDs for selection stability).
 
 ### Views (`Babushka/Views/`)
 
@@ -79,16 +97,18 @@ SwiftUI views with no business logic:
 - **BabushkaApp** — `@main` entry, `WindowGroup`, Cmd+O command, About window, Settings window
 - **ContentView** — `NavigationSplitView` with sidebar/detail split, drag-and-drop, detail router
 - **SidebarView** — List with DisclosureGroups for track type groups
-- **FileSummaryView** — Container info, clickable track list, global tags
-- **TrackDetailView** — Full property inspector with type-specific sections, inline editing for flags/name/language/crop
-- **TrackRowView** — Reusable track summary (icon, codec, language badge, flag badges)
 - **TrackReorderView** — Drag-to-reorder track list
-- **AttachmentDetailView** — Attachment metadata with image preview
 - **PendingChangesBar** — Sticky bar showing pending change count with cancel/apply actions
 - **WelcomeView** — Shown when no file is open
 - **AboutView** — App info, mkvtoolnix status, license
 - **SettingsView** — Output mode configuration
 - **JobsPopoverView** — Background job status popover
+
+#### Detail Views (`Views/Detail/`)
+- **TrackDetailView** — Full property inspector with type-specific sections, inline editing for flags/name/language/crop
+- **TrackRowView** — Reusable track summary (icon, codec, language badge, flag badges)
+- **FileSummaryView** — Container info, clickable track list, global tags
+- **AttachmentDetailView** — Attachment metadata with image preview
 
 ## Navigation
 
@@ -107,11 +127,12 @@ Navigation is selection-driven:
 5. `effective*` methods on `FileViewModel` return the merged value (edit ?? original) for display
 6. `isPropertyModified` checks whether a field has a pending edit (shown as an orange dot)
 7. On apply, `ResolvedChangeset` diffs merged edits against originals, discarding no-ops
-8. `MKVToolnixService` routes to mkvpropedit (property-only) or mkvmerge (structural changes like remove/add/reorder)
+8. `MKVChangesetService` uses command builders to construct argument arrays, then routes to mkvpropedit (property-only) or mkvmerge (structural changes like remove/add/reorder)
 
 ## Concurrency
 
 - Services use `actor` isolation for thread-safe Process execution
+- `ProcessRunner` is a shared actor dependency injected into sub-services
 - ViewModels are `@MainActor` for safe UI updates
 - Models are `Sendable` structs
 - Async/await is used throughout (no callbacks or Combine)
@@ -123,6 +144,8 @@ Tests use Swift Testing (`import Testing`) with real MKV files:
 - `TestFileManager` downloads and caches test files from the matroska-test-files GitHub repo
 - `MKVIdentificationTests` — JSON parsing with embedded sample data, round-trip encoding
 - `MKVToolnixLocatorTests` — Binary location verification
-- `MKVToolnixServiceTests` — End-to-end identification against real MKV files
+- `MKVToolnixServiceTests` — End-to-end identification against real MKV files (via facade)
 - `FileViewModelTests` — Sidebar tree construction and state transitions
 - `CropPresetTests` — Aspect ratio crop value calculations
+- `CommandBuilderTests` — Argument array construction for mkvmerge and mkvpropedit (pure unit tests)
+- `SidebarTreeBuilderTests` — Sidebar tree structure, UUID preservation, and edge cases (pure unit tests)

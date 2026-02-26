@@ -25,6 +25,7 @@ final class AppViewModel {
 
     let service: MKVToolnixService
     let jobsViewModel: JobsViewModel
+    private let fileDialogService = FileDialogService()
 
     init(service: MKVToolnixService = MKVToolnixService()) {
         self.service = service
@@ -49,15 +50,9 @@ final class AppViewModel {
             return
         }
 
-        let panel = NSOpenPanel()
-        panel.title = "Open MKV File"
-        panel.allowedContentTypes = [.init(filenameExtension: "mkv")!]
-        panel.allowsMultipleSelection = true
-        panel.canChooseDirectories = false
+        guard let urls = fileDialogService.openMKVFiles() else { return }
 
-        guard panel.runModal() == .OK else { return }
-
-        for url in panel.urls {
+        for url in urls {
             openFileAt(path: url.path)
         }
     }
@@ -125,12 +120,7 @@ final class AppViewModel {
             for: track, sourceFileName: fileVM.fileName
         )
 
-        let panel = NSSavePanel()
-        panel.title = "Export Track"
-        panel.nameFieldStringValue = suggestedName
-        panel.canCreateDirectories = true
-
-        guard panel.runModal() == .OK, let url = panel.url else { return }
+        guard let url = fileDialogService.saveFile(title: "Export Track", suggestedName: suggestedName) else { return }
 
         jobsViewModel.exportTrack(
             track: track,
@@ -146,12 +136,7 @@ final class AppViewModel {
     }
 
     func addTrack(to fileVM: FileViewModel, trackType: TrackType) {
-        let openPanel = NSOpenPanel()
-        openPanel.title = "Select \(trackType.displayName) Track File"
-        openPanel.allowsMultipleSelection = false
-        openPanel.canChooseDirectories = false
-
-        guard openPanel.runModal() == .OK, let inputURL = openPanel.url else { return }
+        guard let inputURL = fileDialogService.openFile(title: "Select \(trackType.displayName) Track File") else { return }
 
         let trackFile = TrackFileAddition(
             filePath: inputURL.path,
@@ -178,12 +163,7 @@ final class AppViewModel {
             effectiveOutputPath = tempDir.appendingPathComponent("\(UUID().uuidString).mkv").path
         case .specifyLocation:
             let suggestedName = fileVM.fileName.replacingOccurrences(of: ".mkv", with: "_modified.mkv")
-            let panel = NSSavePanel()
-            panel.title = "Save Modified File"
-            panel.nameFieldStringValue = suggestedName
-            panel.canCreateDirectories = true
-            panel.allowedContentTypes = [.init(filenameExtension: "mkv")!]
-            guard panel.runModal() == .OK, let url = panel.url else { return }
+            guard let url = fileDialogService.saveFile(title: "Save Modified File", suggestedName: suggestedName, contentType: "mkv") else { return }
             effectiveOutputPath = url.path
         }
 
@@ -211,12 +191,8 @@ final class AppViewModel {
     func exportAttachment(_ attachment: MKVAttachment, sidebarItem: SidebarItem) {
         guard let fileVM = fileViewModel(for: sidebarItem) else { return }
 
-        let panel = NSSavePanel()
-        panel.title = "Export Attachment"
-        panel.nameFieldStringValue = attachment.fileName ?? "attachment_\(attachment.id)"
-        panel.canCreateDirectories = true
-
-        guard panel.runModal() == .OK, let url = panel.url else { return }
+        let suggestedName = attachment.fileName ?? "attachment_\(attachment.id)"
+        guard let url = fileDialogService.saveFile(title: "Export Attachment", suggestedName: suggestedName) else { return }
 
         jobsViewModel.exportAttachment(
             attachment: attachment,

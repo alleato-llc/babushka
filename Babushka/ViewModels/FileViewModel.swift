@@ -49,7 +49,7 @@ final class FileViewModel: Identifiable {
         do {
             let identification = try await service.identify(filePath: filePath)
             state = .loaded(identification)
-            buildSidebarTree(from: identification)
+            updateSidebarTree(from: identification, preserveIds: false)
         } catch {
             state = .error(error.localizedDescription)
         }
@@ -59,119 +59,20 @@ final class FileViewModel: Identifiable {
         do {
             let identification = try await service.identify(filePath: filePath)
             state = .loaded(identification)
-            rebuildSidebarTree(from: identification)
+            updateSidebarTree(from: identification, preserveIds: true)
         } catch {
             state = .error(error.localizedDescription)
         }
     }
 
-    private func rebuildSidebarTree(from identification: MKVIdentification) {
-        // Build a mapping from track ID → existing sidebar UUID to preserve selection
-        var trackIdToUUID: [Int: UUID] = [:]
-        var trackTypeToGroupUUID: [TrackType: UUID] = [:]
-        var attachmentGroupUUID: UUID?
-        var attachmentIdToUUID: [Int: UUID] = [:]
-
-        for (_, children) in sidebarChildren {
-            for child in children {
-                switch child {
-                case .track(let uuid, let track):
-                    trackIdToUUID[track.id] = uuid
-                case .trackGroup(let uuid, let trackType, _):
-                    trackTypeToGroupUUID[trackType] = uuid
-                case .attachmentGroup(let uuid, _):
-                    attachmentGroupUUID = uuid
-                case .attachment(let uuid, let attachment):
-                    attachmentIdToUUID[attachment.id] = uuid
-                default:
-                    break
-                }
-            }
-        }
-
-        var items: [SidebarItem] = []
-        var children: [UUID: [SidebarItem]] = [:]
-
-        let fileItem = SidebarItem.file(id: id, fileName: fileName)
-        items.append(fileItem)
-
-        let tracksByType = Dictionary(grouping: identification.tracks) { $0.type }
-        let sortedTypes = tracksByType.keys.sorted { $0.sortOrder < $1.sortOrder }
-
-        var fileChildren: [SidebarItem] = []
-
-        for trackType in sortedTypes {
-            guard let tracks = tracksByType[trackType], !tracks.isEmpty else { continue }
-
-            let groupId = trackTypeToGroupUUID[trackType] ?? UUID()
-            let groupItem = SidebarItem.trackGroup(id: groupId, trackType: trackType, count: tracks.count)
-            fileChildren.append(groupItem)
-
-            let trackItems = tracks.map { track in
-                let trackUUID = trackIdToUUID[track.id] ?? UUID()
-                return SidebarItem.track(id: trackUUID, track: track)
-            }
-            children[groupId] = trackItems
-        }
-
-        if !identification.attachments.isEmpty {
-            let groupId = attachmentGroupUUID ?? UUID()
-            let groupItem = SidebarItem.attachmentGroup(id: groupId, count: identification.attachments.count)
-            fileChildren.append(groupItem)
-
-            let attachmentItems = identification.attachments.map { attachment in
-                let attachmentUUID = attachmentIdToUUID[attachment.id] ?? UUID()
-                return SidebarItem.attachment(id: attachmentUUID, attachment: attachment)
-            }
-            children[groupId] = attachmentItems
-        }
-
-        children[id] = fileChildren
-        sidebarItems = items
-        sidebarChildren = children
-    }
-
-    private func buildSidebarTree(from identification: MKVIdentification) {
-        var items: [SidebarItem] = []
-        var children: [UUID: [SidebarItem]] = [:]
-
-        let fileItem = SidebarItem.file(id: id, fileName: fileName)
-        items.append(fileItem)
-
-        // Group tracks by type in order: Video, Audio, Subtitles, Unknown
-        let tracksByType = Dictionary(grouping: identification.tracks) { $0.type }
-        let sortedTypes = tracksByType.keys.sorted { $0.sortOrder < $1.sortOrder }
-
-        var fileChildren: [SidebarItem] = []
-
-        for trackType in sortedTypes {
-            guard let tracks = tracksByType[trackType], !tracks.isEmpty else { continue }
-
-            let groupId = UUID()
-            let groupItem = SidebarItem.trackGroup(id: groupId, trackType: trackType, count: tracks.count)
-            fileChildren.append(groupItem)
-
-            let trackItems = tracks.map { track in
-                SidebarItem.track(id: UUID(), track: track)
-            }
-            children[groupId] = trackItems
-        }
-
-        // Attachments
-        if !identification.attachments.isEmpty {
-            let groupId = UUID()
-            let groupItem = SidebarItem.attachmentGroup(id: groupId, count: identification.attachments.count)
-            fileChildren.append(groupItem)
-
-            let attachmentItems = identification.attachments.map { attachment in
-                SidebarItem.attachment(id: UUID(), attachment: attachment)
-            }
-            children[groupId] = attachmentItems
-        }
-
-        children[id] = fileChildren
-        sidebarItems = items
-        sidebarChildren = children
+    private func updateSidebarTree(from identification: MKVIdentification, preserveIds: Bool) {
+        let result = SidebarTreeBuilder.build(
+            fileId: id, fileName: fileName,
+            identification: identification,
+            existingChildren: preserveIds ? sidebarChildren : nil
+        )
+        sidebarItems = result.items
+        sidebarChildren = result.children
     }
 
     func containsItem(withId itemId: UUID) -> Bool {
