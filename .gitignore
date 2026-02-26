@@ -1,0 +1,16 @@
+# Xcode user data
+xcuserdata/
+*.xcuserstate
+
+# Xcode workspace settings
+*.xcworkspace/xcuserdata/
+
+# Build artifacts
+DerivedData/
+build/
+
+# macOS
+.DS_Store
+
+# Claude Code local settings
+.claude/
