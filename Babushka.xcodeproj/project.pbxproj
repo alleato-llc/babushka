@@ -25,7 +25,13 @@
 		B10000000000000000000010 /* TrackRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000010 /* TrackRowView.swift */; };
 		B10000000000000000000011 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000011 /* WelcomeView.swift */; };
 		B10000000000000000000012 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000012 /* AboutView.swift */; };
+		B10000000000000000000013 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000013 /* Assets.xcassets */; };
 		B10000000000000000000014 /* AttachmentDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000020 /* AttachmentDetailView.swift */; };
+		B10000000000000000000017 /* TestFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000017 /* TestFileManager.swift */; };
+		B10000000000000000000018 /* MKVToolnixLocatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000018 /* MKVToolnixLocatorTests.swift */; };
+		B10000000000000000000019 /* MKVToolnixServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000019 /* MKVToolnixServiceTests.swift */; };
+		B1000000000000000000001A /* MKVIdentificationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000001A /* MKVIdentificationTests.swift */; };
+		B1000000000000000000001B /* FileViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000001B /* FileViewModelTests.swift */; };
 		B10000000000000000000021 /* CodecExtensionMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000021 /* CodecExtensionMap.swift */; };
 		B10000000000000000000022 /* ExportJob.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000022 /* ExportJob.swift */; };
 		B10000000000000000000023 /* JobsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000023 /* JobsViewModel.swift */; };
@@ -64,12 +70,6 @@
 		B10000000000000000000052 /* ChapterDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000052 /* ChapterDetailView.swift */; };
 		B10000000000000000000053 /* ChapterEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000053 /* ChapterEditorView.swift */; };
 		B10000000000000000000054 /* ChapterXMLServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000054 /* ChapterXMLServiceTests.swift */; };
-		B10000000000000000000013 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000013 /* Assets.xcassets */; };
-		B10000000000000000000017 /* TestFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000017 /* TestFileManager.swift */; };
-		B10000000000000000000018 /* MKVToolnixLocatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000018 /* MKVToolnixLocatorTests.swift */; };
-		B10000000000000000000019 /* MKVToolnixServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000019 /* MKVToolnixServiceTests.swift */; };
-		B1000000000000000000001A /* MKVIdentificationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000001A /* MKVIdentificationTests.swift */; };
-		B1000000000000000000001B /* FileViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000001B /* FileViewModelTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -101,7 +101,6 @@
 		A10000000000000000000010 /* TrackRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackRowView.swift; sourceTree = "<group>"; };
 		A10000000000000000000011 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		A10000000000000000000012 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
-		A10000000000000000000020 /* AttachmentDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentDetailView.swift; sourceTree = "<group>"; };
 		A10000000000000000000013 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A10000000000000000000014 /* Babushka.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Babushka.entitlements; sourceTree = "<group>"; };
 		A10000000000000000000015 /* Babushka.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Babushka.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -111,6 +110,7 @@
 		A10000000000000000000019 /* MKVToolnixServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MKVToolnixServiceTests.swift; sourceTree = "<group>"; };
 		A1000000000000000000001A /* MKVIdentificationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MKVIdentificationTests.swift; sourceTree = "<group>"; };
 		A1000000000000000000001B /* FileViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileViewModelTests.swift; sourceTree = "<group>"; };
+		A10000000000000000000020 /* AttachmentDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentDetailView.swift; sourceTree = "<group>"; };
 		A10000000000000000000021 /* CodecExtensionMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodecExtensionMap.swift; sourceTree = "<group>"; };
 		A10000000000000000000022 /* ExportJob.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportJob.swift; sourceTree = "<group>"; };
 		A10000000000000000000023 /* JobsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobsViewModel.swift; sourceTree = "<group>"; };
@@ -169,7 +169,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		G10000000000000000000001 /* Root */ = {
+		G10000000000000000000001 = {
 			isa = PBXGroup;
 			children = (
 				G10000000000000000000002 /* Babushka */,
@@ -206,30 +206,6 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		G1000000000000000000000C /* MKV */ = {
-			isa = PBXGroup;
-			children = (
-				A10000000000000000000002 /* MKVIdentification.swift */,
-				A10000000000000000000003 /* MKVContainer.swift */,
-				A10000000000000000000004 /* MKVTrack.swift */,
-				A10000000000000000000005 /* MKVAttachment.swift */,
-				A10000000000000000000006 /* MKVTags.swift */,
-				A10000000000000000000050 /* MKVChapterEdition.swift */,
-			);
-			path = MKV;
-			sourceTree = "<group>";
-		};
-		G1000000000000000000000D /* Changeset */ = {
-			isa = PBXGroup;
-			children = (
-				A10000000000000000000028 /* PendingChangeset.swift */,
-				A10000000000000000000025 /* TrackPropertyEdits.swift */,
-				A1000000000000000000002A /* TrackPropertyKey.swift */,
-				A10000000000000000000026 /* TrackFileAddition.swift */,
-			);
-			path = Changeset;
-			sourceTree = "<group>";
-		};
 		G10000000000000000000004 /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -241,20 +217,6 @@
 				A10000000000000000000051 /* ChapterXMLService.swift */,
 			);
 			path = Services;
-			sourceTree = "<group>";
-		};
-		G1000000000000000000000E /* MKVToolnix */ = {
-			isa = PBXGroup;
-			children = (
-				A10000000000000000000009 /* MKVToolnixService.swift */,
-				A10000000000000000000008 /* MKVToolnixLocator.swift */,
-				A10000000000000000000031 /* MKVToolnixError.swift */,
-				A10000000000000000000034 /* MKVIdentificationService.swift */,
-				A10000000000000000000035 /* MKVExtractionService.swift */,
-				A10000000000000000000036 /* MKVChangesetService.swift */,
-				A10000000000000000000030 /* ProcessRunner.swift */,
-			);
-			path = MKVToolnix;
 			sourceTree = "<group>";
 		};
 		G10000000000000000000005 /* ViewModels */ = {
@@ -283,18 +245,6 @@
 				A10000000000000000000024 /* JobsPopoverView.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		G1000000000000000000000F /* Detail */ = {
-			isa = PBXGroup;
-			children = (
-				A1000000000000000000000F /* TrackDetailView.swift */,
-				A10000000000000000000010 /* TrackRowView.swift */,
-				A10000000000000000000020 /* AttachmentDetailView.swift */,
-				A1000000000000000000000E /* FileSummaryView.swift */,
-				A10000000000000000000052 /* ChapterDetailView.swift */,
-			);
-			path = Detail;
 			sourceTree = "<group>";
 		};
 		G10000000000000000000007 /* Products */ = {
@@ -351,6 +301,56 @@
 				A10000000000000000000041 /* FileViewModelChangesetTests.swift */,
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		G1000000000000000000000C /* MKV */ = {
+			isa = PBXGroup;
+			children = (
+				A10000000000000000000002 /* MKVIdentification.swift */,
+				A10000000000000000000003 /* MKVContainer.swift */,
+				A10000000000000000000004 /* MKVTrack.swift */,
+				A10000000000000000000005 /* MKVAttachment.swift */,
+				A10000000000000000000006 /* MKVTags.swift */,
+				A10000000000000000000050 /* MKVChapterEdition.swift */,
+			);
+			path = MKV;
+			sourceTree = "<group>";
+		};
+		G1000000000000000000000D /* Changeset */ = {
+			isa = PBXGroup;
+			children = (
+				A10000000000000000000028 /* PendingChangeset.swift */,
+				A10000000000000000000025 /* TrackPropertyEdits.swift */,
+				A1000000000000000000002A /* TrackPropertyKey.swift */,
+				A10000000000000000000026 /* TrackFileAddition.swift */,
+			);
+			path = Changeset;
+			sourceTree = "<group>";
+		};
+		G1000000000000000000000E /* MKVToolnix */ = {
+			isa = PBXGroup;
+			children = (
+				A10000000000000000000009 /* MKVToolnixService.swift */,
+				A10000000000000000000008 /* MKVToolnixLocator.swift */,
+				A10000000000000000000031 /* MKVToolnixError.swift */,
+				A10000000000000000000034 /* MKVIdentificationService.swift */,
+				A10000000000000000000035 /* MKVExtractionService.swift */,
+				A10000000000000000000036 /* MKVChangesetService.swift */,
+				A10000000000000000000030 /* ProcessRunner.swift */,
+			);
+			path = MKVToolnix;
+			sourceTree = "<group>";
+		};
+		G1000000000000000000000F /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				A1000000000000000000000F /* TrackDetailView.swift */,
+				A10000000000000000000010 /* TrackRowView.swift */,
+				A10000000000000000000020 /* AttachmentDetailView.swift */,
+				A1000000000000000000000E /* FileSummaryView.swift */,
+				A10000000000000000000052 /* ChapterDetailView.swift */,
+			);
+			path = Detail;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -417,7 +417,7 @@
 				en,
 				Base,
 			);
-			mainGroup = G10000000000000000000001 /* Root */;
+			mainGroup = G10000000000000000000001;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
 			productRefGroup = G10000000000000000000007 /* Products */;
@@ -429,6 +429,17 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		R10000000000000000000001 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B10000000000000000000013 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
 		SH0000000000000000000001 /* Generate App Icon */ = {
@@ -450,17 +461,6 @@
 			shellScript = "if command -v python3 &>/dev/null; then\n  python3 \"${PROJECT_DIR}/scripts/generate_icon.py\"\nelse\n  echo \"warning: python3 not found, skipping icon generation\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
-
-/* Begin PBXResourcesBuildPhase section */
-		R10000000000000000000001 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B10000000000000000000013 /* Assets.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		S10000000000000000000001 /* Sources */ = {
@@ -678,8 +678,10 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = 84T3H9QXHB;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.video";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © Alleato L.L.C. All rights reserved.";
 				INFOPLIST_KEY_NSMainStoryboardFile = "";
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
@@ -687,7 +689,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 0.1.0; // x-release-please-version
+				MARKETING_VERSION = 0.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.alleato.Babushka;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -705,8 +707,10 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = 84T3H9QXHB;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.video";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © Alleato L.L.C. All rights reserved.";
 				INFOPLIST_KEY_NSMainStoryboardFile = "";
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
@@ -714,7 +718,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 0.1.0; // x-release-please-version
+				MARKETING_VERSION = 0.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.alleato.Babushka;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -730,7 +734,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 0.1.0; // x-release-please-version
+				MARKETING_VERSION = 0.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.alleato.BabushkaTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
@@ -747,7 +751,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 0.1.0; // x-release-please-version
+				MARKETING_VERSION = 0.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.alleato.BabushkaTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
@@ -787,7 +791,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
 	};
 	rootObject = D10000000000000000000001 /* Project object */;
 }
