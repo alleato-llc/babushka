@@ -15,6 +15,12 @@ build/
 # Claude Code local settings
 .claude/
 
+# Generated app icon
+Babushka/Assets.xcassets/AppIcon.appiconset/icon.png
+
+# Python venv (icon generation)
+scripts/.venv/
+
 # Website
 node_modules/
 website/dist/
